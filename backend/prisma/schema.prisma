@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  password      String
+  dob           DateTime?
+  conditions    String[]
+  createdAt     DateTime       @default(now())
+  symptoms      Symptom[]
+  prescriptions Prescription[]
+  reminders     Reminder[]
+  reports       Report[]
+}
+
+model Symptom {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  description String
+  severity    Int      @default(5)
+  bodyPart    String?
+  notes       String?
+  recordedAt  DateTime @default(now())
+}
+
+model Prescription {
+  id         String     @id @default(cuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id])
+  imageUrl   String?
+  rawText    String?
+  parsedJson Json?
+  uploadedAt DateTime   @default(now())
+  medicines  Medicine[]
+}
+
+model Medicine {
+  id             String       @id @default(cuid())
+  prescriptionId String
+  prescription   Prescription @relation(fields: [prescriptionId], references: [id])
+  name           String
+  dosage         String?
+  frequency      String?
+  duration       String?
+  instructions   String?
+  reminders      Reminder[]
+}
+
+model Reminder {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+  medicineId String?
+  medicine   Medicine? @relation(fields: [medicineId], references: [id])
+  label      String
+  time       String
+  taken      Boolean   @default(false)
+  date       DateTime  @default(now())
+}
+
+model Report {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  fileUrl    String
+  type       String
+  uploadedAt DateTime @default(now())
+}
