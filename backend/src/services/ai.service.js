@@ -1,13 +1,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-// Connect to Gemini using your free API key
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-// We use the gemini-1.5-flash model — it's fast and free
-const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-// ─────────────────────────────────────────────
-// 1. Parse a prescription using OCR text
-// ─────────────────────────────────────────────
+const genAI = new GoogleGenerativeAI("AQ.Ab8RN6KOw70FRSEXBQjfii6rFODGCr45f1HhHk7BGcrElkv7mw");
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 const parsePrescription = async (rawText) => {
   try {
     const prompt = `
