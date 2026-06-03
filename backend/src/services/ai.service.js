@@ -1,6 +1,6 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-const genAI = new GoogleGenerativeAI("AQ.Ab8RN6KOw70FRSEXBQjfii6rFODGCr45f1HhHk7BGcrElkv7mw");
+const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 const parsePrescription = async (rawText) => {
   try {
