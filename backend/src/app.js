@@ -11,7 +11,10 @@ const aiRoutes = require('./routes/ai.routes');
 const app = express();
 
 // Middleware - these run before every request
-app.use(cors()); // Allow frontend to talk to backend
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true
+})); // Allow frontend to talk to backend
 app.use(express.json()); // Allow JSON request bodies
 app.use('/uploads', express.static(path.join(__dirname, '../uploads'))); // Serve uploaded files
 
