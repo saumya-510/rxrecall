@@ -12,7 +12,7 @@ const app = express();
 
 // Middleware - these run before every request
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
+  origin: 'https://rxrecall.vercel.app',
   credentials: true
 })); // Allow frontend to talk to backend
 app.use(express.json()); // Allow JSON request bodies
